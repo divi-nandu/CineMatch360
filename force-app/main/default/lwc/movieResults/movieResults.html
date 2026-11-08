@@ -1,0 +1,168 @@
+<template>
+  <section class="results-section">
+    <!-- Section Heading -->
+    <div class="results-heading">
+      <span class="heading-accent">✦ YOUR MOVIE JOURNEY</span>
+      <h2>Find Your Next <span>Favourite.</span></h2>
+      <p>Explore stories worth remembering.</p>
+    </div>
+
+    <!-- Quick Discovery -->
+    <div class="quick-discovery">
+      <p class="quick-discovery-label">QUICK DISCOVERY</p>
+      <div class="quick-filter-list">
+        <template for:each={quickFilterOptions} for:item="option">
+          <button
+            key={option.value}
+            type="button"
+            class={option.className}
+            data-filter={option.value}
+            onclick={handleQuickFilter}
+          >
+            {option.label}
+          </button>
+        </template>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="movie-tools">
+      <div class="search-box">
+        <input
+          type="search"
+          placeholder="Search movies..."
+          value={searchTerm}
+          oninput={handleSearchChange}
+          onkeydown={handleSearchKeydown}
+        />
+        <button onclick={handleSearch}>Search</button>
+      </div>
+
+      <select value={selectedGenre} onchange={handleGenreChange}>
+        <template for:each={genreOptions} for:item="option">
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        </template>
+      </select>
+
+      <select value={selectedSort} onchange={handleSortChange}>
+        <template for:each={sortOptions} for:item="option">
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        </template>
+      </select>
+
+      <select value={minimumRating} onchange={handleRatingFilterChange}>
+        <template for:each={ratingOptions} for:item="option">
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        </template>
+      </select>
+    </div>
+
+    <!-- Loading Skeletons -->
+    <template if:true={isLoading}>
+      <div class="skeleton-grid" aria-label="Loading movies">
+        <template for:each={skeletonCards} for:item="item">
+          <article class="skeleton-card" key={item}>
+            <div class="skeleton-poster"></div>
+            <div class="skeleton-info">
+              <div class="skeleton-title"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-button"></div>
+              <div class="skeleton-button"></div>
+            </div>
+          </article>
+        </template>
+      </div>
+    </template>
+
+    <!-- Error -->
+    <template if:true={errorMessage}>
+      <p class="empty-message">{errorMessage}</p>
+      <button class="watchlist-add" onclick={handleSearch}>Try Again</button>
+    </template>
+
+    <!-- Movie Results -->
+    <template if:false={isLoading}>
+      <template if:true={hasMovies}>
+        <div class="movie-grid">
+          <template for:each={displayMovies} for:item="movie">
+            <article class="movie-card" key={movie.id}>
+              <!-- Clickable Poster -->
+              <div class="poster">
+                <button
+                  class="poster-click"
+                  type="button"
+                  data-id={movie.id}
+                  onclick={handleViewDetails}
+                  aria-label="View details for this movie"
+                >
+                  <img src={movie.image} alt={movie.title} />
+                </button>
+
+                <span class="rating"> ★ {movie.rating} </span>
+              </div>
+
+              <!-- Movie Information -->
+              <div class="movie-info">
+                <h3>{movie.title}</h3>
+                <p>{movie.year} · {movie.genre}</p>
+
+                <button
+                  class="watchlist-add"
+                  data-id={movie.id}
+                  onclick={handleViewDetails}
+                >
+                  View Details
+                </button>
+
+                <button
+                  class={movie.buttonClass}
+                  data-id={movie.id}
+                  onclick={handleAddToWatchlist}
+                  disabled={movie.isInWatchlist}
+                >
+                  <template if:true={movie.isInWatchlist}>
+                    ✓ Added to Watchlist
+                  </template>
+                  <template if:false={movie.isInWatchlist}>
+                    + Add to Watchlist
+                  </template>
+                </button>
+              </div>
+            </article>
+          </template>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button onclick={handlePrevious} disabled={previousDisabled}>
+            Previous
+          </button>
+
+          <span>Page {currentPage} of {totalPages}</span>
+
+          <button onclick={handleNext} disabled={nextDisabled}>Next</button>
+        </div>
+      </template>
+
+      <!-- No Movies -->
+      <template if:false={hasMovies}>
+        <template if:false={errorMessage}>
+          <div class="empty-state">
+            <div class="empty-icon">🎬</div>
+            <h3>No Movies Found</h3>
+            <p>
+              We couldn't find movies matching your selection. Try another
+              search, genre or Quick Discovery option.
+            </p>
+          </div>
+        </template>
+      </template>
+    </template>
+  </section>
+</template>

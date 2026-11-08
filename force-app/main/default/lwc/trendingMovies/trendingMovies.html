@@ -1,0 +1,71 @@
+<template>
+  <section class="trending-section">
+    <div class="section-header">
+      <div>
+        <p class="section-label">TRENDING NOW</p>
+        <h2>Popular Picks</h2>
+      </div>
+
+      <p class="section-description">Stories worth watching right now.</p>
+    </div>
+
+    <template if:true={isLoading}>
+      <p class="section-description">Loading movies...</p>
+    </template>
+
+    <template if:true={hasMovies}>
+      <div class="movie-grid">
+        <template for:each={displayMovies} for:item="movie">
+          <div class="movie-card" key={movie.id}>
+            <div class="movie-poster">
+              <button
+                class="poster-click"
+                type="button"
+                data-id={movie.id}
+                onclick={handleViewDetails}
+                aria-label="View details for this movie"
+              >
+                <img src={movie.image} alt={movie.title} />
+              </button>
+
+              <span class="rating"> ★ {movie.rating} </span>
+            </div>
+
+            <div class="movie-info">
+              <h3>{movie.title}</h3>
+
+              <p>{movie.year} • {movie.genre}</p>
+
+              <button
+                class="trending-details-button"
+                data-id={movie.id}
+                onclick={handleViewDetails}
+              >
+                View Details
+              </button>
+
+              <button
+                class={movie.buttonClass}
+                data-id={movie.id}
+                onclick={handleAddToWatchlist}
+                disabled={movie.isInWatchlist}
+              >
+                <template if:true={movie.isInWatchlist}>
+                  ✓ Added to Watchlist
+                </template>
+
+                <template if:false={movie.isInWatchlist}>
+                  + Add to Watchlist
+                </template>
+              </button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </template>
+
+    <template if:true={errorMessage}>
+      <p class="section-description">{errorMessage}</p>
+    </template>
+  </section>
+</template>

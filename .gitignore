@@ -1,0 +1,48 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Salesforce CLI
+.sf/
+.sfdx/
+.localdevserver/
+deploy-options.json
+
+# LWC VS Code autocomplete
+**/lwc/jsconfig.json
+
+# Dependencies
+node_modules/
+
+# Jest and test coverage
+coverage/
+.nyc_output/
+.jest/
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Salesforce code quality tools
+.pmdCache
+.eslintcache
+
+# Python
+**/__pycache__/
+**/.venv/
+**/venv/

@@ -1,0 +1,398 @@
+<template>
+  <div class="cine-match">
+    <!-- BRAND HEADER AND NAVIGATION -->
+    <header class="navbar">
+      <div class="brand">
+        <span class="brand-icon">C</span>
+        <span>CINEMATCH <span class="brand-360">360</span></span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#trending">Trending</a>
+        <a href="#discover">Discover</a>
+      </nav>
+
+      <button class="watchlist-button" onclick={handleWatchlist}>
+        ♡ My Watchlist ({watchlistCount})
+      </button>
+    </header>
+
+    <!-- HOME / HERO SECTION -->
+    <section class="hero-banner" id="home" style={heroStyle}>
+      <div class="hero-content">
+        <p class="hero-label">YOUR PERSONAL MOVIE UNIVERSE</p>
+        <h1>Every Mood.<br />Every Story.</h1>
+
+        <p class="hero-description">
+          Discover your next favourite movie. Explore stories that match your
+          mood, taste and imagination.
+        </p>
+
+        <div class="hero-actions">
+          <button class="explore-button" onclick={handleExplore}>
+            Explore My Movie Space →
+          </button>
+        </div>
+
+        <p class="hero-note">DISCOVER · EXPLORE · EXPERIENCE</p>
+      </div>
+    </section>
+
+    <!-- MY MOVIE SPACE DASHBOARD -->
+    <section class="movie-space" id="my-space">
+      <div class="movie-space-heading">
+        <div>
+          <p class="section-label">YOUR PERSONAL COLLECTION</p>
+          <h2>My Movie Space</h2>
+          <p class="movie-space-subtitle">
+            Your movie journey, all in one place.
+          </p>
+        </div>
+      </div>
+
+      <div class="movie-space-stats">
+        <article class="space-stat-card">
+          <span class="space-stat-icon">♡</span>
+          <p>Saved Movies</p>
+          <h3>{watchlistCount}</h3>
+          <span class="space-stat-note">In your watchlist</span>
+        </article>
+
+        <article class="space-stat-card">
+          <span class="space-stat-icon">✦</span>
+          <p>Genres Collected</p>
+          <h3>{savedGenreCount}</h3>
+          <span class="space-stat-note"> Across your saved movies </span>
+        </article>
+
+        <article class="space-stat-card">
+          <span class="space-stat-icon">◎</span>
+          <p>Current Mood</p>
+          <h3 class="space-mood-value">{selectedMoodDisplay}</h3>
+          <span class="space-stat-note"> Your discovery preference </span>
+        </article>
+      </div>
+
+      <template if:true={hasCollectionSpotlight}>
+        <div class="collection-spotlight">
+          <div class="spotlight-poster">
+            <img
+              src={collectionSpotlight.image}
+              alt={collectionSpotlight.title}
+            />
+          </div>
+
+          <div class="spotlight-content">
+            <p class="section-label">COLLECTION SPOTLIGHT</p>
+            <h3>{collectionSpotlight.title}</h3>
+
+            <p class="spotlight-meta">
+              {collectionSpotlight.year} · {collectionSpotlight.genre} · ★
+              {collectionSpotlight.rating}
+            </p>
+
+            <p class="spotlight-description">
+              Your highest-rated saved movie. Keep exploring and build your
+              collection.
+            </p>
+
+            <button
+              class="spotlight-button"
+              type="button"
+              onclick={handleOpenSpotlight}
+            >
+              Explore Movie →
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <template if:false={hasCollectionSpotlight}>
+        <div class="empty-space">
+          <span>🎬</span>
+          <h3>Your movie space is waiting</h3>
+          <p>
+            Save movies to your watchlist and your personal collection will
+            appear here.
+          </p>
+        </div>
+      </template>
+    </section>
+
+    <!-- TRENDING MOVIES -->
+    <section id="trending">
+      <c-trending-movies
+        watchlist-ids={watchlistIds}
+        onaddtowatchlist={handleAddToWatchlist}
+        onopenmoviedetails={handleOpenMovieFromResults}
+      >
+      </c-trending-movies>
+    </section>
+
+    <!-- DISCOVER MOVIES -->
+    <section id="discover">
+      <c-mood-categories onmoodselect={handleMoodSelect}> </c-mood-categories>
+
+      <c-movie-results
+        selected-mood={selectedMood}
+        watchlist-ids={watchlistIds}
+        onaddtowatchlist={handleAddToWatchlist}
+        onopenmoviedetails={handleOpenMovieFromResults}
+      >
+      </c-movie-results>
+    </section>
+
+    <!-- WATCHLIST -->
+    <template if:true={showWatchlist}>
+      <section class="watchlist-section" data-watchlist>
+        <p class="section-label">YOUR PERSONAL COLLECTION</p>
+        <h2>My Watchlist</h2>
+        <p class="movie-space-subtitle">All your saved movies in one place.</p>
+
+        <template if:true={isWatchlistLoading}>
+          <p class="empty-watchlist">Loading your saved movies...</p>
+        </template>
+
+        <template if:false={isWatchlistLoading}>
+          <template if:true={hasWatchlist}>
+            <div class="watchlist-grid">
+              <template for:each={watchlist} for:item="movie">
+                <div class="watchlist-item" key={movie.recordId}>
+                  <button
+                    class="watchlist-poster-button"
+                    type="button"
+                    data-id={movie.id}
+                    onclick={handleOpenMovie}
+                    aria-label="View details for this movie"
+                  >
+                    <img src={movie.image} alt={movie.title} />
+                  </button>
+
+                  <div class="watchlist-info">
+                    <h3>{movie.title}</h3>
+
+                    <p>{movie.year} · {movie.genre}</p>
+
+                    <p class="watchlist-rating">★ {movie.rating}</p>
+
+                    <button
+                      class="details-button"
+                      data-id={movie.id}
+                      onclick={handleOpenMovie}
+                    >
+                      View Details
+                    </button>
+
+                    <button
+                      class="remove-button"
+                      data-record-id={movie.recordId}
+                      data-movie-id={movie.id}
+                      onclick={handleRemoveMovie}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <template if:false={hasWatchlist}>
+            <div class="empty-space">
+              <span>🎬</span>
+              <h3>Your watchlist is empty</h3>
+              <p>
+                Visit Trending or Discover to save movies to your collection.
+              </p>
+            </div>
+          </template>
+        </template>
+      </section>
+    </template>
+
+    <!-- SHARED MOVIE DETAILS MODAL -->
+    <template if:true={showMovieDetails}>
+      <div class="modal-backdrop">
+        <section
+          class="movie-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Movie details"
+        >
+          <button class="modal-close" onclick={handleCloseMovie}>✕</button>
+
+          <img
+            class="modal-poster"
+            src={selectedMovie.image}
+            alt={selectedMovie.title}
+          />
+
+          <div class="modal-content">
+            <p class="section-label">MOVIE DETAILS</p>
+            <h2>{selectedMovie.title}</h2>
+
+            <p class="modal-meta">
+              {selectedMovie.year} · {selectedMovie.genre} · ★
+              {selectedMovie.rating}
+            </p>
+
+            <p class="modal-overview">{selectedMovie.overview}</p>
+
+            <template if:true={isLoadingExtras}>
+              <p class="extra-loading">Loading movie information...</p>
+            </template>
+
+            <!-- TRAILER -->
+            <div class="movie-extra-section">
+              <h3>Watch Trailer</h3>
+
+              <template if:true={trailerUrl}>
+                <a
+                  class="cinema-link"
+                  href={trailerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ▶ Watch Official Trailer on YouTube
+                </a>
+              </template>
+
+              <template if:false={trailerUrl}>
+                <p class="extra-empty">
+                  No official YouTube trailer was found.
+                </p>
+              </template>
+            </div>
+
+            <!-- STREAMING PROVIDERS -->
+            <div class="movie-extra-section">
+              <h3>Where to Watch in India</h3>
+
+              <template if:true={hasWatchProviders}>
+                <div class="provider-list">
+                  <template for:each={watchProviders} for:item="provider">
+                    <button
+                      key={provider.key}
+                      type="button"
+                      class="provider-chip"
+                      data-url={provider.link}
+                      onclick={handleProviderClick}
+                    >
+                      <span>{provider.name}</span>
+                      <small>{provider.type}</small>
+                    </button>
+                  </template>
+                </div>
+
+                <p class="provider-note">
+                  Availability and subscriptions may change. Check the provider
+                  listing before watching.
+                </p>
+
+                <template if:true={watchProviderUrl}>
+                  <button
+                    type="button"
+                    class="provider-more"
+                    data-url={watchProviderUrl}
+                    onclick={handleProviderClick}
+                  >
+                    View all India options
+                  </button>
+                </template>
+              </template>
+
+              <template if:false={hasWatchProviders}>
+                <p class="extra-empty">{providerMessage}</p>
+              </template>
+            </div>
+
+            <!-- SIMILAR MOVIES -->
+            <div class="movie-extra-section">
+              <h3>Similar Movies</h3>
+
+              <template if:true={hasSimilarMovies}>
+                <div class="similar-movie-grid">
+                  <template for:each={similarMovies} for:item="similar">
+                    <button
+                      key={similar.id}
+                      class="similar-movie"
+                      data-id={similar.id}
+                      onclick={handleOpenSimilarMovie}
+                    >
+                      <img src={similar.image} alt={similar.title} />
+
+                      <span>{similar.title}</span>
+
+                      <small> ★ {similar.rating} </small>
+                    </button>
+                  </template>
+                </div>
+              </template>
+
+              <template if:false={hasSimilarMovies}>
+                <p class="extra-empty">No similar movies are available.</p>
+              </template>
+            </div>
+
+            <!-- RATING AND REVIEW -->
+            <div class="movie-extra-section review-section">
+              <h3>Your Rating &amp; Review</h3>
+
+              <label class="review-label" for="movie-rating">
+                Your rating (1–10)
+              </label>
+
+              <input
+                id="movie-rating"
+                class="review-rating-input"
+                type="number"
+                min="1"
+                max="10"
+                step="0.5"
+                value={reviewRating}
+                onchange={handleRatingChange}
+                placeholder="Example: 8.5"
+              />
+
+              <label class="review-label" for="movie-review">
+                Your review
+              </label>
+
+              <textarea
+                id="movie-review"
+                class="review-textarea"
+                maxlength="2000"
+                value={reviewText}
+                onchange={handleReviewChange}
+                placeholder="What did you think about this movie?"
+              >
+              </textarea>
+
+              <button
+                class="review-save-button"
+                onclick={handleSaveReview}
+                disabled={isSavingReview}
+              >
+                {reviewButtonLabel}
+              </button>
+
+              <template if:true={savedReview}>
+                <div class="saved-review">
+                  <p>YOUR SAVED REVIEW · ★ {savedReview.rating}/10</p>
+
+                  <span> {savedReview.reviewText} </span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </section>
+      </div>
+    </template>
+
+    <!-- FOOTER -->
+    <footer class="tmdb-attribution">
+      This product uses the TMDB API but is not endorsed or certified by TMDB.
+    </footer>
+  </div>
+</template>

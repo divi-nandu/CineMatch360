@@ -1,0 +1,21 @@
+<template>
+  <section class="mood-section">
+    <p class="section-label">DISCOVER YOUR MOOD</p>
+    <h2>What Are You In The Mood For?</h2>
+
+    <div class="mood-grid">
+      <template for:each={displayMoods} for:item="mood">
+        <button
+          key={mood.name}
+          class={mood.cssClass}
+          data-mood={mood.name}
+          onclick={handleMoodClick}
+        >
+          <span class="mood-icon">{mood.icon}</span>
+          <h3>{mood.name}</h3>
+          <p>{mood.description}</p>
+        </button>
+      </template>
+    </div>
+  </section>
+</template>

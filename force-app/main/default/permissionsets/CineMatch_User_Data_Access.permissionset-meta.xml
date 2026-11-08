@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <classAccesses>
+        <apexClass>CineMatchUserDataController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+
+    <!-- Optional Watchlist Field Permissions -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Watchlist__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Watchlist__c.Genre__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Watchlist__c.Rating__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Watchlist__c.Poster_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Watchlist__c.Overview__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Optional Review Field Permission -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CineMatch_Review__c.User_Review__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <label>CineMatch User Data Access</label>
+
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CineMatch_Watchlist__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CineMatch_Review__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+
+</PermissionSet>

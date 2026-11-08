@@ -745,7 +745,15 @@ These are ideas only. None of them exists in the code today.
 
 ## 14. Screenshots to add
 
-Save images in `docs/screenshots/`. Use PNG files with the names below. No screenshots have been added yet, and the `docs/screenshots/` folder does not exist yet. Create it when you add the first image.
+Save images in `doc/screenshots/`. The following five screenshots have already been added:
+
+- `01-home-hero.png`
+- `05-popular-picks.png`
+- `06-mood-categories.png`
+- `14-movie-details-modal.png`
+- `19-my-watchlist.png`
+
+The remaining screenshots are suggestions for future documentation updates.
 
 **Before you capture:** hide or blur your org URL, username, email and any token or secret value. Never show the External Credential secret.
 

@@ -255,23 +255,23 @@ See the full list in the [project documentation](docs/PROJECT_DOCUMENTATION.md#1
 
 ### Home
 
-![Home and hero banner](docs/screenshots/01-home-hero.png)
+![Home and hero banner](doc/screenshots/01-home-hero.png)
 
 ### Popular Picks
 
-![Popular Picks](docs/screenshots/05-popular-picks.png)
+![Popular Picks](doc/screenshots/05-popular-picks.png)
 
 ### Mood categories
 
-![Mood categories](docs/screenshots/06-mood-categories.png)
+![Mood categories](doc/screenshots/06-mood-categories.png)
 
 ### Movie details
 
-![Movie details](docs/screenshots/14-movie-details-modal.png)
+![Movie details](doc/screenshots/14-movie-details-modal.png)
 
 ### My Watchlist
 
-![My Watchlist](docs/screenshots/19-my-watchlist.png)
+![My Watchlist](doc/screenshots/19-my-watchlist.png)
 
 > 📷 **Still to add (planned):** My Movie Space dashboard (`02-my-movie-space-dashboard.png`), Collection Spotlight (`03-collection-spotlight.png`), Quick Discovery (`07-quick-discovery.png`) and Where to watch in India with providers (`15-where-to-watch-india.png`). These files do not exist yet. The full list is in [section 14 of the project documentation](docs/PROJECT_DOCUMENTATION.md#14-screenshots-to-add).
 

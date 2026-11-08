@@ -101,7 +101,7 @@ flowchart LR
 - `CineMatchTMDBService` calls TMDB through `callout:TMDB_API`.
 - `CineMatchUserDataController` reads and writes the user's watchlist and reviews.
 
-👉 Full explanation: [docs/PROJECT_DOCUMENTATION.md](docs/PROJECT_DOCUMENTATION.md)
+👉 Full explanation: [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)
 
 ## 🧩 What is inside
 
@@ -162,7 +162,7 @@ TMDB is called only from Apex, through Named Credential `TMDB_API` and External 
 - App page and tab: `CineMatch` (the page contains only the `cineMatch` component)
 - Static resource: `fightclub` (hero and fallback poster image)
 
-> The repository also holds other Salesforce practice code (49 standalone practice LWC bundles and 11 practice Apex classes) and three unused CineMatch wrapper bundles. None of them is part of the running app. See the [project documentation](docs/PROJECT_DOCUMENTATION.md#2-repository-scope).
+> The repository also holds other Salesforce practice code (49 standalone practice LWC bundles and 11 practice Apex classes) and three unused CineMatch wrapper bundles. None of them is part of the running app. See the [project documentation](PROJECT_DOCUMENTATION.md#2-repository-scope).
 
 ## 🚀 Getting started
 
@@ -200,7 +200,7 @@ sf org assign permset --target-org cinematch --name CineMatch_TMDB_Access
 sf org assign permset --target-org cinematch --name CineMatch_User_Data_Access
 ```
 
-📖 Exact deploy command (with the correct file paths), token steps and troubleshooting: [Installation and deployment](docs/PROJECT_DOCUMENTATION.md#10-installation-and-deployment)
+📖 Exact deploy command (with the correct file paths), token steps and troubleshooting: [Installation and deployment](PROJECT_DOCUMENTATION.md#10-installation-and-deployment)
 
 ## 🧪 Testing
 
@@ -249,7 +249,7 @@ These are ideas only. They are not part of the current project.
 - Server-side filters and sorting that apply to all result pages
 - A CineMatch-only repository or branch
 
-See the full list in the [project documentation](docs/PROJECT_DOCUMENTATION.md#131-future-enhancement-ideas-not-implemented).
+See the full list in the [project documentation](PROJECT_DOCUMENTATION.md#131-future-enhancement-ideas-not-implemented).
 
 ## 🖼️ Screenshots
 
@@ -273,11 +273,11 @@ See the full list in the [project documentation](docs/PROJECT_DOCUMENTATION.md#1
 
 ![My Watchlist](doc/screenshots/19-my-watchlist.png)
 
-> 📷 **Still to add (planned):** My Movie Space dashboard (`02-my-movie-space-dashboard.png`), Collection Spotlight (`03-collection-spotlight.png`), Quick Discovery (`07-quick-discovery.png`) and Where to watch in India with providers (`15-where-to-watch-india.png`). These files do not exist yet. The full list is in [section 14 of the project documentation](docs/PROJECT_DOCUMENTATION.md#14-screenshots-to-add).
+> 📷 **Still to add (planned):** My Movie Space dashboard (`02-my-movie-space-dashboard.png`), Collection Spotlight (`03-collection-spotlight.png`), Quick Discovery (`07-quick-discovery.png`) and Where to watch in India with providers (`15-where-to-watch-india.png`). These files do not exist yet. The full list is in [section 14 of the project documentation](PROJECT_DOCUMENTATION.md#14-screenshots-to-add).
 
 ## 📚 Documentation
 
-- [Project documentation](docs/PROJECT_DOCUMENTATION.md) – architecture, components, Apex, objects, integrations, deployment, known limitations and the screenshot checklist
+- [Project documentation](PROJECT_DOCUMENTATION.md) – architecture, components, Apex, objects, integrations, deployment, known limitations and the screenshot checklist
 
 ## 🙏 Credits
 

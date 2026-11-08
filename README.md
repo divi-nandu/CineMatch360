@@ -189,7 +189,7 @@ Then:
 
 1. **Deploy** only the CineMatch metadata (objects, credentials, Apex classes and test classes, permission sets, the four main CineMatch LWC components, app page, tab, static resource). Do not deploy the whole `force-app` folder, because it also holds unrelated practice code. Before you commit or share the project, replace the `Authorization` value in the External Credential file with a placeholder.
 2. **Add your own TMDB token** in the External Credential inside Salesforce (`TMDB_External_Credential`). Never save it in a file in Git.
-3. **Assign both permission sets** to your user (command below), then check that your user has access to the optional CineMatch custom fields.
+3. **Assign both permission sets** to your user (command below), The `CineMatch_User_Data_Access` permission set includes field permissions for the optional CineMatch custom fields.
 4. **Add the CineMatch tab** to a Lightning app and open it. If **Popular Picks** shows movies, your TMDB credential works.
 
 Permission set command:
@@ -215,7 +215,17 @@ sf apex run test --target-org cinematch \
 npm run test:unit
 ```
 
-The Apex tests are written for both CineMatch Apex classes. **No test results are claimed here.** The tests have not been run for this documentation, so run them in your org after deploying. `CineMatchTMDBServiceTest` does not call `getMoviesByQuickFilter`. The six Jest files in the project (`moodCategories`, `movieResults`, the three wrapper bundles and the practice component `studentCard`) are generated placeholders (`expect(1).toBe(1)`), not real component tests.
+The Apex tests are written for both CineMatch Apex classes. The author ran them in a Salesforce org, and all 3 passed.
+
+| Test method                                              | Result |
+| -------------------------------------------------------- | ------ |
+| `CineMatchTMDBServiceTest.testInvalidMovieId`            | Passed |
+| `CineMatchTMDBServiceTest.testMovieEndpoints`            | Passed |
+| `CineMatchUserDataControllerTest.testWatchlistAndReview` | Passed |
+
+**Overall: 3/3 passed (100% success rate).** Run the tests again in your own org after deploying. Code coverage is not claimed here. `CineMatchTMDBServiceTest` does not call `getMoviesByQuickFilter`.
+
+**Jest tests have not passed and are not claimed to.** The six Jest files in the project (`moodCategories`, `movieResults`, the three wrapper bundles and the practice component `studentCard`) are generated placeholders (`expect(1).toBe(1)`) and are not completed component tests.
 
 ## 🔒 Security
 
@@ -224,7 +234,8 @@ The Apex tests are written for both CineMatch Apex classes. **No test results ar
 - Watchlist and review records are private to each user.
 - Access is granted with permission sets.
 - Every user who deploys the project must configure their own TMDB token in Salesforce External Credentials.
-- The External Credential file in the repository has an `Authorization` value. Replace it with a placeholder before you commit or share the project, and keep the real token only in Salesforce. If a real token was ever committed or shared, create a new one in your TMDB account.
+- **Never commit your real TMDB API token to GitHub.** The External Credential metadata in the repository must contain only the placeholder (`REPLACE_WITH_YOUR_TMDB_TOKEN`), not the actual token. Keep the real token only in Salesforce, in `TMDB_External_Credential`.
+- Check the External Credential file before every commit or share. If a real token was ever committed or shared, create a new one in your TMDB account.
 - Do not commit tokens or secrets to this repository.
 
 ## 🔭 Future enhancements (ideas, not implemented)
@@ -234,7 +245,6 @@ These are ideas only. They are not part of the current project.
 - Real Jest tests for the CineMatch components
 - An Apex test for `getMoviesByQuickFilter`
 - Removing the three unused wrapper bundles, or deciding what they are for
-- Field permissions inside the `CineMatch_User_Data_Access` permission set
 - A complete `manifest/package.xml` for CineMatch 360
 - Server-side filters and sorting that apply to all result pages
 - A CineMatch-only repository or branch
@@ -243,43 +253,27 @@ See the full list in the [project documentation](docs/PROJECT_DOCUMENTATION.md#1
 
 ## 🖼️ Screenshots
 
-> 📷 **Screenshots are not added yet.** Planned images (to be saved in `docs/screenshots/`, which does not exist yet):
->
-> | Screen                   | File                                               |
-> | ------------------------ | -------------------------------------------------- |
-> | Home and hero banner     | `docs/screenshots/01-home-hero.png`                |
-> | My Movie Space dashboard | `docs/screenshots/02-my-movie-space-dashboard.png` |
-> | Collection Spotlight     | `docs/screenshots/03-collection-spotlight.png`     |
-> | Quick Discovery          | `docs/screenshots/07-quick-discovery.png`          |
-> | Movie details            | `docs/screenshots/14-movie-details-modal.png`      |
-> | Where to watch in India  | `docs/screenshots/15-where-to-watch-india.png`     |
-> | My Watchlist             | `docs/screenshots/19-my-watchlist.png`             |
-
-<!--
-After you add the images to docs/screenshots/, delete the note above and remove the comment markers around the lines below.
-The full list of screenshots to capture is in docs/PROJECT_DOCUMENTATION.md (section 14).
-
 ### Home
-![Home](docs/screenshots/01-home-hero.png)
 
-### My Movie Space
-![My Movie Space](docs/screenshots/02-my-movie-space-dashboard.png)
+![Home and hero banner](docs/screenshots/01-home-hero.png)
 
-### Collection Spotlight
-![Collection Spotlight](docs/screenshots/03-collection-spotlight.png)
+### Popular Picks
 
-### Quick Discovery
-![Quick Discovery](docs/screenshots/07-quick-discovery.png)
+![Popular Picks](docs/screenshots/05-popular-picks.png)
+
+### Mood categories
+
+![Mood categories](docs/screenshots/06-mood-categories.png)
 
 ### Movie details
+
 ![Movie details](docs/screenshots/14-movie-details-modal.png)
 
-### Where to watch in India
-![Where to watch](docs/screenshots/15-where-to-watch-india.png)
-
 ### My Watchlist
+
 ![My Watchlist](docs/screenshots/19-my-watchlist.png)
--->
+
+> 📷 **Still to add (planned):** My Movie Space dashboard (`02-my-movie-space-dashboard.png`), Collection Spotlight (`03-collection-spotlight.png`), Quick Discovery (`07-quick-discovery.png`) and Where to watch in India with providers (`15-where-to-watch-india.png`). These files do not exist yet. The full list is in [section 14 of the project documentation](docs/PROJECT_DOCUMENTATION.md#14-screenshots-to-add).
 
 ## 📚 Documentation
 
